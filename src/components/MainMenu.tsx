@@ -9,14 +9,15 @@ import { Badge } from '@/components/ui/badge';
 import { GameMode, GameRoom } from '@/types/game';
 import { GameService } from '@/services/gameService';
 import { useToast } from '@/hooks/use-toast';
-import { Gamepad2, Users, Cpu, Grid3X3, Zap, Loader2 } from 'lucide-react';
+import { Gamepad2, Users, Cpu, Grid3X3, Zap, Loader2, Sparkles } from 'lucide-react';
 
 interface MainMenuProps {
   onStartOfflineGame: (mode: GameMode, gridSize?: number, winLength?: number) => void;
   onJoinRoom: (room: GameRoom) => void;
+  onShowSplashDemo?: () => void;
 }
 
-export function MainMenu({ onStartOfflineGame, onJoinRoom }: MainMenuProps) {
+export function MainMenu({ onStartOfflineGame, onJoinRoom, onShowSplashDemo }: MainMenuProps) {
   const { toast } = useToast();
   const [gameService] = useState(() => new GameService());
   const [loading, setLoading] = useState(false);
@@ -146,6 +147,17 @@ export function MainMenu({ onStartOfflineGame, onJoinRoom }: MainMenuProps) {
           <p className="text-xl text-muted-foreground">
             Choose your battleground: Classic precision or Ultimate strategy
           </p>
+          
+          {onShowSplashDemo && (
+            <Button
+              onClick={onShowSplashDemo}
+              variant="outline"
+              className="mt-4 flex items-center gap-2"
+            >
+              <Sparkles className="h-4 w-4" />
+              View Splash Demo
+            </Button>
+          )}
         </div>
 
         <Tabs defaultValue="offline" className="w-full">

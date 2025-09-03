@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { MainMenu } from '@/components/MainMenu';
 import { GameBoard } from '@/components/GameBoard';
+import { SplashDemo } from '@/components/SplashDemo';
 import { GameRoom, GameMode, OfflineGameState } from '@/types/game';
 import { GameUtils, ClassicGameLogic, UltimateGameLogic } from '@/utils/gameLogic';
 
 const Index = () => {
-  const [currentView, setCurrentView] = useState<'menu' | 'offline-game' | 'online-game'>('menu');
+  const [currentView, setCurrentView] = useState<'menu' | 'offline-game' | 'online-game' | 'splash-demo'>('menu');
   const [onlineRoom, setOnlineRoom] = useState<GameRoom | null>(null);
   const [offlineGame, setOfflineGame] = useState<OfflineGameState | null>(null);
 
@@ -144,10 +145,15 @@ const Index = () => {
 
   return (
     <div className="dark">
+      {currentView === 'splash-demo' && (
+        <SplashDemo onBack={returnToMenu} />
+      )}
+      
       {currentView === 'menu' && (
         <MainMenu
           onStartOfflineGame={handleStartOfflineGame}
           onJoinRoom={handleJoinRoom}
+          onShowSplashDemo={() => setCurrentView('splash-demo')}
         />
       )}
       
